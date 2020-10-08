@@ -15,7 +15,10 @@ app.use(bodyParser.json())
 // Database connection configuration here
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://volunteer-imran:imran123456@cluster0.jsbl6.mongodb.net/volunteer?retryWrites=true&w=majority"
+// const uri = "mongodb+srv://volunteer-imran:imran123456@cluster0.jsbl6.mongodb.net/volunteer?retryWrites=true&w=majority"
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.giumd.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const eventsCollection = client.db("volunteer").collection("volunteerEvents");
@@ -137,4 +140,4 @@ app.get('/', (req, res) => {
 // app.listen(port, () => {
   
 // })
-app.listen(port)
+app.listen(process.env.Port || port)
